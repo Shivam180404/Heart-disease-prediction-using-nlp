@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="zxx">
+
+<head>
+	<title>Heart Disease Prediction System</title>
+	<!-- Meta tag Keywords -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="UTF-8" />
+	<meta name="keywords" />
+	<script>
+		addEventListener("load", function () {
+			setTimeout(hideURLbar, 0);
+		}, false);
+
+		function hideURLbar() {
+			window.scrollTo(0, 1);
+		}
+	</script>
+	<link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+	<!-- Bootstrap-Core-CSS -->
+	<link href="{% static 'css/css_slider.css' %}" type="text/css" rel="stylesheet" media="all">
+	<!-- banner slider -->
+	<link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css" media="all" />
+	<!-- Style-CSS -->
+	<link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet">
+	<!-- Font-Awesome-Icons-CSS -->
+	<!-- //Custom-Files -->
+
+	<!-- Web-Fonts -->
+	<link href="//fonts.googleapis.com/css?family=Quicksand:300,400,500,700" rel="stylesheet">
+	<link href="//fonts.googleapis.com/css?family=Mukta:200,300,400,500,600,700,800&amp;subset=devanagari,latin-ext" rel="stylesheet">
+<style>	<!-- //Web-Fonts -->
+.li2{
+	border:1px solid red;
+	padding:8px;
+	}
+</style>
+
+<link rel='stylesheet' type='text/css' href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+<link rel='stylesheet' type='text/css' href="https://cdn.datatables.net/buttons/1.6.2/css/buttons.dataTables.min.css">
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.html5.min.js"></script>
+
+<script>
+$(document).ready(function() {
+    $('#example').DataTable( {
+        dom: 'Bfrtip',
+        buttons: [
+            'copyHtml5',
+            'excelHtml5',
+            'csvHtml5',
+            'pdfHtml5'
+        ]
+    } );
+} );
+</script>
+</head>
+
+<body>
+	<!-- main -->
+	<div id="home" style="margin-bottom:2%">
+		<!-- top header -->
+		<header>
+			<div class="top-bar py-3">
+				<div class="container">
+					<div class="row">
+						
+						<div class="col-xl-7 col-lg-6 col-md-4 top-social-agile text-md-right text-center mt-md-0 mt-2">
+							<div class="row">
+								<div class="offset-xl-6 offset-lg-4">
+								</div>
+								<div class="col-xl-3 col-lg-4 col-6 top-w3layouts p-md-0 text-right">
+									<!-- login -->
+									<a href="login.html" class="login-button-2 text-uppercase text-bl">
+										</a>
+									<!-- //login -->
+								</div>
+								<div class="col-xl-3 col-lg-4 col-6 header-w3layouts text-md-right text-left">
+									<!-- register -->
+									<a href="register.html" class="login-button-2 text-uppercase text-bl">
+										</a>
+									<!-- //register -->
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</header>
+		<!-- //top header -->
+
+		<!-- second header -->
+		<div class="main-top" style="background:rgb(44, 164, 182)">
+			<div class="container-fluid">
+				<div class="header d-md-flex justify-content-between align-items-center py-3">
+					<!-- logo -->
+					<div id="logo" style="margin-left:13%">
+						<h1>
+							<a href="{% url 'home' %}">
+								<span class="fa fa-user-md mr-2"></span>
+								<span class="logo-sp">Heart Disease</span> Prediction
+							</a>
+						</h1>
+					</div>
+					<!-- //logo -->
+					<!-- nav -->
+					{% if request.user.is_staff %}
+					<div class="nav_w3ls" style="margin-right:4%">
+						<nav>
+							<label for="drop1" class="toggle">Menu</label>
+							<input type="checkbox" id="drop1" />
+							<ul class="menu" style="padding:15px;width:100%">
+
+								<li class="mx-lg-4 mx-md-3 my-md-0 my-2"><a href="{% url 'admin_home' %}" >Home</a></li>
+
+								<li>
+									<label for="drop-2" class="toggle toogle-2"> <span class="fa fa-angle-down" aria-hidden="true"></span>
+									</label>
+									<a href="#"> Doctor <span class="fa fa-angle-down" aria-hidden="true"></span></a>
+									<ul style="margin-top:2%;width:40%;margin-right:0%">
+										<li style="width:100%;"><a href="/add_doctor" class="drop-text">Add Doctor</a></li>
+										<li style="width:100%;"><a href="/view_doctor" class="drop-text">View Doctor</a></li>
+									</ul>
+								</li>
+
+
+
+								<li class="mx-lg-4 mx-md-3 my-md-0 my-2"><a href="/view_patient">Patient</a></li>
+								<li class="mx-lg-4 mx-md-3 my-md-0 my-2">
+									<a href="/view_search_pat">Searched Data</a></li>
+								<li><a href="/view_feedback">Feedback</a></li>
+
+							</ul>
+						</nav>
+					</div>
+					<div class="nav_w3ls" style="margin-right:3%">
+
+						<nav>
+							<label for="drop2" class="toggle">Menu</label>
+							<input type="checkbox" id="drop2" />
+							<ul class="menu">
+								<li class="mx-lg-4 mx-md-3 my-md-0 my-2" style="background:red;padding:8px">
+									<!-- First Tier Drop Down -->
+									<label for="drop-2" class="toggle toogle-2"> <span class="fa fa-angle-down" aria-hidden="true"></span>
+									</label>
+									<a href="#"><i class="fa fa-user"></i> {{request.user.username}} <span class="fa fa-angle-down" aria-hidden="true"></span></a>
+									<ul style="margin-top:10%;width:80%;margin-right:5%">
+										<li style="width:100%;"><a href="{% url 'change_password' %}" class="drop-text">Password</a></li>
+										<li style="width:100%;"><a href="{% url 'logout' %}" class="drop-text">Logout</a></li>
+									</ul>
+								</li>
+
+
+
+							</ul>
+						</nav>
+					</div>
+
+					{% elif request.user.patient_set.all.0 %}
+					<div class="nav_w3ls" style="margin-left:5%;font-weight:bold">
+						<nav>
+							<label for="drop3" class="toggle">Menu</label>
+							<input type="checkbox" id="drop3" />
+							<ul class="menu" style="padding:15px;width:100%">
+								<li><a href="{% url 'patient_home' %}" class="active">Home</a></li>
+								<li class="mx-lg-4 mx-md-3 my-md-0 my-2"><a href="/add_heartdetail">Predict</a></li>
+								<li class="mx-lg-4 mx-md-3 my-md-0 my-2"><a href="/profile_doctor">My Detail</a></li>
+								<li class="mx-lg-4 mx-md-3 my-md-0 my-2"><a href="/sent_feedback">Feedback</a></li>
+								<li><a href="/view_search_pat">History</a></li>
+							</ul>
+						</nav>
+					</div>
+					<div class="nav_w3ls" style="margin-right:3%">
+
+						<nav>
+							<label for="drop4" class="toggle">Menu</label>
+							<input type="checkbox" id="drop4" />
+							<ul class="menu">
+								<li class="mx-lg-4 mx-md-3 my-md-0 my-2" style="background:#6a6767;padding:8px">
+									<!-- First Tier Drop Down -->
+									<label for="drop-3" class="toggle toogle-3"> <span class="fa fa-angle-down" aria-hidden="true"></span>
+									</label>
+									<a href="#"><i class="fa fa-sign-in"></i> Hello,{{request.user.username}} <span class="fa fa-angle-down" aria-hidden="true"></span></a>
+									<ul style="margin-top:8%;width:80%;margin-right:5%">
+										<li style="width:100%;"><a href="{% url 'change_password' %}" class="drop-text"> Password</a></li>
+										<li style="width:100%;"><a href="{% url 'logout' %}" class="drop-text"> Logout</a></li>
+									</ul>
+								</li>
+							</ul>
+						</nav>
+					</div>
+					{% elif request.user.doctor_set.all.0 %}
+					<div class="nav_w3ls" style="margin-right:4%">
+						<nav>
+							<label for="drop5" class="toggle">Menu</label>
+							<input type="checkbox" id="drop5" />
+							<ul class="menu" style="padding:15px;width:100%">
+								<li><a href="{% url 'doctor_home' %}" class="active">Home</a></li>
+								<li class="mx-lg-4 mx-md-3 my-md-0 my-2">
+									<a href="/profile_doctor">My Detail</a></li>
+								<li class="mx-lg-4 mx-md-3 my-md-0 my-2">
+									<a href="{% url 'view_search_pat' %}">Searched Data</a></li>
+
+							</ul>
+						</nav>
+					</div>
+					<div class="nav_w3ls" style="margin-right:3%">
+
+						<nav>
+							<label for="drop6" class="toggle">Menu</label>
+							<input type="checkbox" id="drop6" />
+							<ul class="menu">
+								<li class="mx-lg-4 mx-md-3 my-md-0 my-2" style="background:#6a6767;padding:8px">
+									<!-- First Tier Drop Down -->
+									<label for="drop6" class="toggle toogle-2"> <span class="fa fa-angle-down" aria-hidden="true"></span>
+									</label>
+									<a href="#"><i class="fa fa-user"></i> {{request.user.username}} <span class="fa fa-angle-down" aria-hidden="true"></span></a>
+									<ul style="margin-top:10%;width:80%;margin-right:5%">
+										<li style="width:100%;"><a href="{% url 'change_password' %}" class="drop-text">Password</a></li>
+										<li style="width:100%;"><a href="{% url 'logout' %}" class="drop-text">Logout</a></li>
+									</ul>
+								</li>
+
+
+
+							</ul>
+						</nav>
+					</div>
+					{% else %}
+					<div class="nav_w3ls" style="margin-right:4%">
+						<nav>
+							<label for="drop7" class="toggle">Menu</label>
+							<input type="checkbox" id="drop7" />
+							<ul class="menu" style="padding:15px;width:100%">
+								<li><a href="{% url 'home' %}" class="active">Home</a></li>
+								<li><a href="{% url 'contact' %}">Contact Us</a></li>
+							</ul>
+						</nav>
+					</div>
+					<div class="nav_w3ls" style="margin-right:3%">
+
+						<nav>
+							<label for="drop" class="toggle">Menu</label>
+							<input type="checkbox" id="drop" />
+							<ul class="menu">
+								<li class="mx-lg-4 mx-md-3 my-md-0 my-2" style="background:#6a6767;padding:8px">
+									<!-- First Tier Drop Down -->
+									<label for="drop-2" class="toggle toogle-2"> <span class="fa fa-angle-down" aria-hidden="true"></span>
+									</label>
+									<a href="#"><i class="fa fa-sign-in"></i> Login <span class="fa fa-angle-down" aria-hidden="true"></span></a>
+									<ul style="margin-top:10%;width:80%;margin-right:5%">
+										<li style="width:100%;"><a href="{% url 'login_admin' %}" class="drop-text">Admin</a></li>
+										<li style="width:100%;"><a href="{% url 'login' %}" class="drop-text">User</a></li>
+									</ul>
+								</li>
+
+
+
+							</ul>
+						</nav>
+					</div>
+					{% endif %}
+
+
+					<!-- //nav -->
+				</div>
+			</div>
+		</div>
+		<!-- //second header -->
+
+		<!-- banner -->
+		{% block body %}
+		{% endblock %}
+		<!-- //banner -->
+	</div>
+	<!-- //main -->
+
+
+	<!-- footer bottom -->
+	<!-- copyright -->
+	<div class="copy-w3pvt" style="background:rgb(44, 164, 182);color:white">
+		<div class="container py-3">
+			<div class="row">
+				<div class="col-lg-7 w3ls_footer_grid1_left text-lg-left text-center">
+				</div>
+				<div class="col-lg-5 w3ls_footer_grid_left1_pos text-lg-right text-center mt-lg-0 mt-2">
+					<ul style="color:white">
+						<li>
+							<a href="#" style="color:white" class="facebook">
+								<span class="fa fa-facebook-f mr-2"></span>Facebook</a>
+						</li>
+						<li class="mx-3">
+							<a href="#" style="color:white" class="twitter">
+								<span class="fa fa-twitter mr-2"></span>Twitter</a>
+						</li>
+						<li>
+							<a href="#" style="color:white" class="google">
+								<span class="fa fa-google-plus mr-2"></span>Google Plus</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<a href="#home" style="color:white" class="move-top text-center"></a>
+
+	<button id="helpChatToggle" class="help-chat-toggle" type="button" aria-label="Open help chatbot">
+		<span class="fa fa-comments"></span>
+	</button>
+	<div id="helpChatBox" class="help-chat-box">
+		<div class="help-chat-header">
+			<h6>Help Assistant</h6>
+			<button id="helpChatClose" type="button" aria-label="Close chatbot">&times;</button>
+		</div>
+		<div id="helpChatQuickActions" class="help-chat-quick-actions">
+			<button type="button" class="help-chat-chip" data-query="admin login">Admin Login</button>
+			<button type="button" class="help-chat-chip" data-query="signup error">Signup Issue</button>
+			<button type="button" class="help-chat-chip" data-query="prediction values">Prediction Values</button>
+		</div>
+		<div id="helpChatMessages" class="help-chat-messages">
+			<div class="help-chat-message bot">
+				Hi! I can help with login, signup, prediction inputs, and common errors. Try: "admin login", "signup error", or "prediction values".
+			</div>
+		</div>
+		<div class="help-chat-input-wrap">
+			<input id="helpChatInput" type="text" placeholder="Ask your question..." />
+			<button id="helpChatSend" type="button">Send</button>
+		</div>
+	</div>
+
+	<script>
+		(function () {
+			var chatToggle = document.getElementById('helpChatToggle');
+			var chatBox = document.getElementById('helpChatBox');
+			var chatClose = document.getElementById('helpChatClose');
+			var chatSend = document.getElementById('helpChatSend');
+			var chatInput = document.getElementById('helpChatInput');
+			var chatMessages = document.getElementById('helpChatMessages');
+			var quickActionWrap = document.getElementById('helpChatQuickActions');
+			var historyKey = 'hdps_help_chat_history';
+
+			function currentTimeText() {
+				return new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+			}
+
+			function addMessage(text, role, skipSave) {
+				var bubble = document.createElement('div');
+				bubble.className = 'help-chat-message ' + role;
+				var messageText = document.createElement('span');
+				messageText.className = 'help-chat-message-text';
+				messageText.textContent = text;
+				var stamp = document.createElement('small');
+				stamp.className = 'help-chat-stamp';
+				stamp.textContent = currentTimeText();
+				bubble.appendChild(messageText);
+				bubble.appendChild(stamp);
+				chatMessages.appendChild(bubble);
+				chatMessages.scrollTop = chatMessages.scrollHeight;
+				if (!skipSave) {
+					saveHistory();
+				}
+			}
+
+			function addTypingIndicator() {
+				var indicator = document.createElement('div');
+				indicator.id = 'helpChatTyping';
+				indicator.className = 'help-chat-message bot help-chat-typing';
+				indicator.innerHTML = '<span></span><span></span><span></span>';
+				chatMessages.appendChild(indicator);
+				chatMessages.scrollTop = chatMessages.scrollHeight;
+			}
+
+			function removeTypingIndicator() {
+				var indicator = document.getElementById('helpChatTyping');
+				if (indicator) {
+					indicator.remove();
+				}
+			}
+
+			function saveHistory() {
+				try {
+					window.localStorage.setItem(historyKey, chatMessages.innerHTML);
+				} catch (err) {
+					// Ignore storage errors in privacy mode
+				}
+			}
+
+			function restoreHistory() {
+				try {
+					var saved = window.localStorage.getItem(historyKey);
+					if (saved) {
+						chatMessages.innerHTML = saved;
+					}
+				} catch (err) {
+					// Ignore storage errors in privacy mode
+				}
+			}
+
+			function getBotReply(message) {
+				var msg = message.toLowerCase();
+				if (msg.indexOf('admin') !== -1 && msg.indexOf('login') !== -1) {
+					return 'Use /login_admin with admin username. If password is unknown, run: python manage.py changepassword admin';
+				}
+				if (msg.indexOf('signup') !== -1 || msg.indexOf('register') !== -1) {
+					return 'For signup errors, use a unique username/email and upload an image. If username exists, choose another one.';
+				}
+				if (msg.indexOf('prediction') !== -1 || msg.indexOf('input') !== -1 || msg.indexOf('values') !== -1) {
+					return 'Prediction needs numeric values for Age, BP, Cholesterol, Fasting BS, ECG, Max Heart Rate, Oldpeak, Slope, CA, and Thal. Sex can be Male/Female or 1/0.';
+				}
+				if (msg.indexOf('404') !== -1 || msg.indexOf('not found') !== -1) {
+					return 'Open routes without trailing slash in this project (example: /signup, /login, /add_heartdetail).';
+				}
+				if (msg.indexOf('error') !== -1 || msg.indexOf('exception') !== -1) {
+					return 'Please share the full error title and URL (for example: ValueError at /add_heartdetail) and I can guide the exact fix.';
+				}
+				return 'I can help with login, signup, prediction form values, and common route/errors. Please type your issue in short.';
+			}
+
+			function handleSend() {
+				var text = chatInput.value.trim();
+				if (!text) return;
+				addMessage(text, 'user');
+				chatInput.value = '';
+				var reply = getBotReply(text);
+				addTypingIndicator();
+				window.setTimeout(function () {
+					removeTypingIndicator();
+					addMessage(reply, 'bot');
+				}, 550);
+			}
+
+			chatToggle.addEventListener('click', function () {
+				chatBox.classList.toggle('open');
+			});
+
+			chatClose.addEventListener('click', function () {
+				chatBox.classList.remove('open');
+			});
+
+			chatSend.addEventListener('click', handleSend);
+			quickActionWrap.addEventListener('click', function (event) {
+				if (event.target && event.target.classList.contains('help-chat-chip')) {
+					chatInput.value = event.target.getAttribute('data-query');
+					handleSend();
+				}
+			});
+			chatInput.addEventListener('keypress', function (event) {
+				if (event.key === 'Enter') {
+					handleSend();
+				}
+			});
+			restoreHistory();
+		})();
+	</script>
+
+</body>
+
+</html>

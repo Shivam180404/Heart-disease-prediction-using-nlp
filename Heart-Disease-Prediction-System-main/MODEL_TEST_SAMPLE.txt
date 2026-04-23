@@ -1,0 +1,62 @@
+Heart Disease Model - Sample Test Inputs
+=======================================
+
+Use these values in the "Add Heart Detail" form to test prediction quickly.
+Field order:
+age, sex, cp, trestbps, chole, fbs, restecg, thalach, exang, old_peak, slope, ca, thal
+
+Notes:
+- sex: Male/Female (or 1/0)
+- All other fields should be numeric.
+
+
+Sample 1 (Likely Lower Risk)
+----------------------------
+age       = 45
+sex       = Male
+cp        = 1
+trestbps  = 120
+chole     = 210
+fbs       = 0
+restecg   = 1
+thalach   = 170
+exang     = 0
+old_peak  = 0.4
+slope     = 2
+ca        = 0
+thal      = 2
+
+
+Sample 2 (Likely Higher Risk)
+-----------------------------
+age       = 61
+sex       = Male
+cp        = 0
+trestbps  = 150
+chole     = 290
+fbs       = 1
+restecg   = 0
+thalach   = 110
+exang     = 1
+old_peak  = 2.8
+slope     = 1
+ca        = 2
+thal      = 3
+
+
+Sample 3 (Female Test Case)
+---------------------------
+age       = 54
+sex       = Female
+cp        = 2
+trestbps  = 130
+chole     = 245
+fbs       = 0
+restecg   = 1
+thalach   = 150
+exang     = 0
+old_peak  = 1.1
+slope     = 2
+ca        = 0
+thal      = 2
+

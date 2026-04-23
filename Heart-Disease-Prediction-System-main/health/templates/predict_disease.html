@@ -1,0 +1,164 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block body %}
+
+	<section class="logins py-5">
+		<div class="container py-xl-5 py-lg-3">
+			<div class="title-section mb-md-5 mb-4">
+				<h6 class="w3ls-title-sub" style="color:red"></h6><br><br><center>
+				<h3 class="w3ls-title text-uppercase text-dark font-weight-bold">Heart Prediction Output</h3></center>
+			</div><hr/>
+			<div class="login px-sm-12" style="width:100%">
+
+                <h1 align='center' style='color:#414141'>Prediction output</h1><hr><center><p><b>Accuracy (%) is :</b> {{ accuracy }}  </p><p><b>Result:</b>
+                {% if pred == "0" %}
+                <span style='color:red'><strong>You may posses a risk of heart disease.</strong></span>
+                {% else %}
+                <span style='color:green'><strong>You are healthy.</strong></span>
+                {% endif %}
+
+            </p></center>
+
+			</div>
+            {% if pred == "0" %}
+
+            <div class="container-fluid" style="width:90%;margin-top:3%">
+                    <div class="container-fluid">
+                        <h1 align="center" class="w3ls-title text-uppercase text-dark font-weight-bold">Doctor Recommendation System</h1>
+                        <p align="center"><b>Based on your location:</b> {{ patient_location|default:"Not available" }}</p>
+                        {% if patient_has_coords %}
+                        <p align="center"><b>Mode:</b> Distance-based sorting using latitude/longitude</p>
+                        {% else %}
+                        <p align="center"><b>Mode:</b> Address-based matching (add latitude/longitude for better sorting)</p>
+                        {% endif %}
+                    </div><hr>
+
+                    <div class="container-fluid" style="margin-bottom:3%">
+                        <h3 align="center" class="text-dark font-weight-bold">Nearby Cardiologists</h3><hr>
+                        <table id="cardiologist_table" class="display" style="width:100%">
+                          <thead>
+                            <tr>
+                              <th>#</th>
+                              <th>Image</th>
+                              <th>Full Name</th>
+                              <th>Email</th>
+                              <th>Contact</th>
+                              <th>Specialization</th>
+                              <th>Address</th>
+                              <th>Distance (km)</th>
+                              <th>Action</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                      {% for i in cardiologists %}
+                        <tr>
+                          <td>{{forloop.counter}}</td>
+                          <td>
+                              {% if i.obj.image %}
+                              <img src="{{i.obj.image.url}}" style="width:80px;height:90px">
+                              {% else %}
+                              <img src="{% static 'images/heart.jpg' %}" style="width:80px;height:90px">
+                              {% endif %}
+                          </td>
+                          <td>{{i.obj.user.first_name}} {{i.obj.user.last_name}}</td>
+                          <td>{{i.obj.user.email}}</td>
+                          <td>{{i.obj.contact}}</td>
+                          <td>{{i.obj.category|default:"Cardiology"}}</td>
+                          <td>{{i.obj.address}}</td>
+                          <td>{% if i.distance_km %}{{ i.distance_km }}{% else %}N/A{% endif %}</td>
+                          <td>
+                              <a href="tel:{{i.obj.contact}}" class="btn btn-sm btn-info">Call</a>
+                              <a href="mailto:{{i.obj.user.email}}" class="btn btn-sm btn-secondary">Email</a>
+                          </td>
+                      </tr>
+                      {% empty %}
+                      <tr>
+                          <td colspan="9">No nearby cardiologist found.</td>
+                      </tr>
+                      {% endfor %}
+                  </tbody>
+              </table>
+          </div>
+
+          <div class="container-fluid" style="margin-top:2%">
+              <h3 align="center" class="text-dark font-weight-bold">Nearby Hospitals</h3><hr>
+              <table class="display" style="width:100%">
+                  <thead>
+                      <tr>
+                          <th>#</th>
+                          <th>Hospital Name</th>
+                          <th>Address</th>
+                          <th>Contact</th>
+                          <th>Distance (km)</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      {% for hospital in nearby_hospitals %}
+                      <tr>
+                          <td>{{forloop.counter}}</td>
+                          <td>{{hospital.obj.name}}</td>
+                          <td>{{hospital.obj.address|default:"N/A"}}</td>
+                          <td>{{hospital.obj.contact|default:"N/A"}}</td>
+                          <td>{% if hospital.distance_km %}{{ hospital.distance_km }}{% else %}N/A{% endif %}</td>
+                      </tr>
+                      {% empty %}
+                      <tr>
+                          <td colspan="5">No nearby hospital data found.</td>
+                      </tr>
+                      {% endfor %}
+                  </tbody>
+              </table>
+          </div>
+
+          <div class="container-fluid" style="margin-top:2%">
+              <h3 align="center" class="text-dark font-weight-bold">All Nearby Doctors</h3><hr>
+                                <table id="example" class="display" style="width:100%">
+                                  <thead>
+                                    <tr>
+                                      <th>#</th>
+                                      <th>Image</th>
+                                      <th>Full Name</th>
+                                      <th>Email</th>
+                                      <th>Contact</th>
+                                      <th>Specialization</th>
+                                      <th>Address</th>
+                                      <th>Distance (km)</th>
+                                      <th>Action</th>
+
+                                  </tr>
+                              </thead>
+                              <tbody>
+                              {% for i in doctor %}
+                                <tr>
+                                  <td>{{forloop.counter}}</td>
+                                  <td>
+                                      {% if i.obj.image %}
+                                      <img src="{{i.obj.image.url}}" style="width:80px;height:90px">
+                                      {% else %}
+                                      <img src="{% static 'images/heart.jpg' %}" style="width:80px;height:90px">
+                                      {% endif %}
+                                  </td>
+                                  <td>{{i.obj.user.first_name}} {{i.obj.user.last_name}}</td>
+                                  <td>{{i.obj.user.email}}</td>
+                                  <td>{{i.obj.contact}}</td>
+                                  <td>{{i.obj.category|default:"N/A"}}</td>
+                                  <td>{{i.obj.address}}</td>
+                                  <td>{% if i.distance_km %}{{ i.distance_km }}{% else %}N/A{% endif %}</td>
+                                  <td>
+                                      <a href="tel:{{i.obj.contact}}" class="btn btn-sm btn-info">Book/Call</a>
+                                      <a href="mailto:{{i.obj.user.email}}" class="btn btn-sm btn-secondary">Contact</a>
+                                  </td>
+                              </tr>
+                              {% empty %}
+                              <tr>
+                                  <td colspan="9">No nearby doctor record found.</td>
+                              </tr>
+                              {% endfor %}
+                          </tbody>
+                      </table>
+                  </div>
+            {% endif %}
+		</div>
+	</section>
+
+{% endblock %}

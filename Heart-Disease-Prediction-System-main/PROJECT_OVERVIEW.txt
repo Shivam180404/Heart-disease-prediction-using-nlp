@@ -1,0 +1,77 @@
+Heart Disease Prediction System - Project Overview
+=================================================
+
+1) What this project does
+-------------------------
+This is a Django-based web application that predicts heart disease risk from user-entered
+medical values. It supports three roles:
+- Admin
+- Patient
+- Doctor
+
+The system stores user records, prediction history, doctor details, and feedback in SQLite.
+
+
+2) Main features
+----------------
+- User registration and login (Patient/Doctor)
+- Admin login and dashboard
+- Heart disease prediction from 13 clinical inputs
+- Prediction history and search logs
+- Doctor management (add/view/approve)
+- Patient profile management
+- Feedback submission and viewing
+- UI helper chatbot for common user guidance
+
+
+3) Tech stack
+-------------
+- Backend: Python, Django
+- Frontend: HTML, CSS, JavaScript, Bootstrap
+- Machine Learning: scikit-learn (Gradient Boosting Classifier)
+- Data processing: pandas, numpy
+- Database: SQLite (db.sqlite3)
+
+
+4) ML input fields used for prediction
+--------------------------------------
+- age
+- sex
+- cp (chest pain type)
+- trestbps (resting blood pressure)
+- chol (cholesterol)
+- fbs (fasting blood sugar)
+- restecg
+- thalach (max heart rate)
+- exang (exercise-induced angina)
+- oldpeak
+- slope
+- ca
+- thal
+
+
+5) Important project structure
+------------------------------
+- manage.py                     -> Django entry point
+- health_desease/urls.py        -> Main URL routes
+- health/views.py               -> Application business logic
+- health/models.py              -> Database models
+- health/templates/             -> UI templates
+- health/static/                -> CSS, JS, images
+- Machine_Learning/heart.csv    -> Dataset used by prediction logic
+- db.sqlite3                    -> Local database file
+
+
+6) How to run locally
+---------------------
+From project root:
+1. python manage.py runserver
+2. Open http://127.0.0.1:8000
+
+
+7) Notes
+--------
+- This is a development setup (not production-hardened).
+- Prediction quality depends on dataset and model training approach.
+- Input values should be numeric where expected to avoid validation errors.
+

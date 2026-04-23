@@ -1,0 +1,37 @@
+Technology Used - Heart Disease Prediction System
+=================================================
+
+1) Programming Languages
+------------------------
+- Python
+- HTML
+- CSS
+- JavaScript
+
+2) Backend Framework
+--------------------
+- Django
+
+3) Frontend/UI
+--------------
+- Bootstrap
+- Custom CSS
+- jQuery
+- DataTables
+- Font Awesome
+
+4) Machine Learning / Data
+--------------------------
+- scikit-learn (GradientBoostingClassifier)
+- pandas
+- numpy
+
+5) Database
+-----------
+- SQLite
+
+6) Development Environment
+--------------------------
+- Python 3.x
+- Django development server
+
